@@ -29,9 +29,9 @@ rrplot <- function(interpolation, interval, x.point, y.point, limits, res = 1000
 
     if (!missing(x.point)) {
         if(!missing(y.point)) {
-            data <- pointData(x, y)
+            data <- pointData(x.point, y.point)
         } else {
-            data <- pointData(x, predict(interpolation, x))
+            data <- pointData(x.point, predict(interpolation, x.point))
         }
     }
 
