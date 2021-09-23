@@ -157,12 +157,14 @@ rrinterpolate <- function(x, y, min, max) {
     scale <- 1
 
     od <- order(x)
-    data <- pointData(x[od], (y[od] - shift)*scale)
+    x <- x[od]
+    y <- y[od]
 
     if (missing(min) | missing(max)) {
         if (missing(min) & missing(max)) {
-            threePointSolver <- quadraticPolynomial
-            interpolation <- interpolate.patch.threePoint(data, threePointSolver)
+            data <- pointData(x, (y - shift)*scale)
+            solver <- quadraticPolynomial
+            interpolation <- interpolate.patch.threePoint(data, solver)
         } else {
             if (missing(max)) {
                 shift <- min
@@ -170,7 +172,8 @@ rrinterpolate <- function(x, y, min, max) {
                 shift <- max
                 scale <- -1
             }
-            threePointSolver <- function(data, i, n. = length(x)) {
+            data <- pointData(x, (y - shift)*scale)
+            solver <- function(data, i, n. = length(x)) {
                 if (i != 2 & i != n.-1) {
                     result <- quadraticPolynomial(data)
                     ce <- coef(result)
@@ -181,12 +184,15 @@ rrinterpolate <- function(x, y, min, max) {
                 result <- interpolate.patch.onePointSlope(data, slopes, quadratic.point.slope.extrema)
                 return(result)
             }
-            interpolation <- interpolate.patch.threePoint.indexed(data, threePointSolver)
+            interpolation <- interpolate.patch.threePoint.indexed(data, solver)
         }
     } else {
         tau <- (max - min) / 2
         shift <- (max + min) / 2
-        threePointSolver <- function(data, i, tau. = tau, n. = length(x)) {
+
+        data <- pointData(x, (y - shift)*scale)
+
+        solver <- function(data, i, tau. = tau, n. = length(x)) {
             if (i != 2 & i != n.-1) {
                 result <- quadraticPolynomial(data)
                 ce <- coef(result)
@@ -200,7 +206,7 @@ rrinterpolate <- function(x, y, min, max) {
             
             return(result)
         }
-        interpolation <- interpolate.patch.threePoint.indexed(data, threePointSolver)
+        interpolation <- interpolate.patch.threePoint.indexed(data, solver)
     }
 
     interpolation <- interpolation / scale + shift
@@ -239,6 +245,9 @@ rrinterpolate.slope <- function(x, y, k, min, max) {
     shift <- 0
     scale <- 1
 
+    od <- order(x)
+    data <- pointData(x[od], (y[od] - shift)*scale)
+
     if (missing(min) | missing(max)) {
         if (missing(min) & missing(max)) {
             solver <- linearPolynomial
@@ -249,20 +258,17 @@ rrinterpolate.slope <- function(x, y, k, min, max) {
                 shift <- max
                 scale <- -1
             }
-            solver <- interpolate.patch.onePointSlope
+            solver <- quadratic.point.slope.extrema
         }
     } else {
         tau <- (max - min) / 2
         shift <- (max + min) / 2
-        threePointSolver <- function(data, slope, tau. = tau) {
-            return(restrictedRange(data, slope, tau.))
+        solver <- function(data, slope) {
+            restrictedRange(data, slope, tau)
         }
     }
 
-    od <- order(x)
-    data <- pointData(x[od], (y[od] - shift)*scale)
-
-    interpolation <- interpolate.patch.onePointSlope(data, k, )
+    interpolation <- interpolate.patch.onePointSlope(data, k, solver)
     interpolation <- interpolation / scale + shift
     return(interpolation)
 }
