@@ -1,0 +1,30 @@
+Package: rrinterp
+Title: Interpolation with minimum and maximum constraints
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Chen",
+           family = "Liang",
+           role = c("aut", "cre"),
+           email = "cccliang@ucdavis.edu")
+Description: An interpolation solver given x and y values along with minimum and/or maximum constraints.  The interpolation aims to produce a function with the minimum second derivative.
+License: use_gpl3_license()
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: methods, limSolve
+Suggests: reshape2, ggplot2
+Collate: 
+    'Generics.R'
+    'AutomaticDifferentiation.R'
+    'Polynomial.R'
+    'PiecewisePolynomial.R'
+    'Patching.R'
+    'Interpolation.R'
+    'PatchingOperators.R'
+    'PiecewisePolynomialOperators.R'
+    'Plot.R'
+    'PointData.R'
+    'PolynomialOperators.R'
+    'QuadraticProgramming.R'
+    'SlopeFinder.R'
