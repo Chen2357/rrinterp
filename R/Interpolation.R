@@ -8,7 +8,8 @@
 #' @param max The value at which the function is 1.
 #' @return \code{(x-min)/(max-min)}
 percentagePolynomial <- function(min,max) {
-    (1/(max-min)) * polynomial(c(-min,1))
+    # (1/(max-min)) * polynomial(c(-min,1))
+    polynomial(c(1,-1/(max-min)), shift = min)
 }
 
 #' Linear Polynomial Given Point and Slope
@@ -46,7 +47,7 @@ restrictedRange <- function(data, slope, tau, patch = getOption("defaultPatching
     k <- slope
     b <- point.y(data)
 
-    p <- polynomial(c(b-k*x0, k))
+    p <- polynomial(c(b, k), shift = x0)
 
     mu <- k^2 / (tau - abs(b))
     delta <- (tau - abs(b)) / abs(k)
@@ -62,7 +63,7 @@ restrictedRange <- function(data, slope, tau, patch = getOption("defaultPatching
             patch
         )
     } else {
-        q <- mu / 4 * polynomial(c(x0^2,-2*x0,1))
+        q <- mu / 4 * polynomial(c(0,0,1), shift = x0)
         result <- patching(
             list(
                 polynomial(0),

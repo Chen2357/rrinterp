@@ -85,6 +85,15 @@ setMethod("initialize", "piecewisePolynomial",
         .Object@polynomial <- polynomial
 
         validObject(.Object)
+
+        for (i in seq_len(length(leftBound))) {
+            if (is.finite(leftBound[i])) {
+                Shift(.Object@polynomial[[i]]) <- leftBound[i]
+            } else if (is.finite(rightBound[i])) {
+                Shift(.Object@polynomial[[i]]) <- rightBound[i]
+            }
+        }
+
         return(.Object)
     }
 )

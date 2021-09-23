@@ -7,10 +7,16 @@ setGeneric("point.y<-", function(object,value) standardGeneric("point.y<-"))
 
 # ANCHOR Polynomial
 setGeneric("coef", function(object) standardGeneric("coef"))
-setGeneric("coef<-", function(object,value) standardGeneric("coef<-"))
+setGeneric("coef<-", function(object, value) standardGeneric("coef<-"))
 
 setGeneric("degree", function(x) standardGeneric("degree"))
-setGeneric("degree<-", function(x,value) standardGeneric("degree<-"))
+setGeneric("degree<-", function(x, value) standardGeneric("degree<-"))
+
+setGeneric("shift", function(x) standardGeneric("shift"))
+setGeneric("shift<-", function(x, value) standardGeneric("shift<-"))
+
+setGeneric("Coef", function(x, shift) standardGeneric("Coef"))
+setGeneric("Shift<-", function(x, value) standardGeneric("Shift<-"))
 
 # ANCHOR Piecewise functions
 setGeneric("as.piecewisePolynomial", function(object, ...) standardGeneric("as.piecewisePolynomial"))

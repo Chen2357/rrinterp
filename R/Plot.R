@@ -38,11 +38,13 @@ rrplot <- function(interpolation, interval, x.point, y.point, limits, res = 1000
     if (missing(autodiff)) {
         f <- as.piecewisePolynomial(interpolation)
         if (is.null(f)) {
-            usedual <- TRUE
+            autodiff <- TRUE
         } else {
             interpolation <- f
-            usedual <- FALSE
+            autodiff <- FALSE
         }
+    } else if (!autodiff) {
+        interpolation <- as.piecewisePolynomial(interpolation)
     }
 
     if (autodiff) {
