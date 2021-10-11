@@ -150,9 +150,9 @@ interpolate.patch.onePointSlope <- function(data, slopes, solver, patch = getOpt
 #' @return A `patching` S4 class.
 #' 
 #' @export
-rrinterpolate <- function(x, y, min, max) {
+rrinterpolate <- function(x, y, min = NA, max = NA) {
     if (length(x) != length(y)) stop("Incompatible lengths of x and y")
-    if (any(y < ifelse(missing(min), -Inf, min) | y > ifelse(missing(max), Inf, max))) stop("Some y values are not in the range specified")
+    if (any(y < ifelse(is.na(min), -Inf, min) | y > ifelse(is.na(max), Inf, max))) stop("Some y values are not in the range specified")
     shift <- 0
     scale <- 1
 
@@ -160,13 +160,13 @@ rrinterpolate <- function(x, y, min, max) {
     x <- x[od]
     y <- y[od]
 
-    if (missing(min) | missing(max)) {
-        if (missing(min) & missing(max)) {
+    if (is.na(min) | is.na(max)) {
+        if (is.na(min) & is.na(max)) {
             data <- pointData(x, (y - shift)*scale)
             solver <- quadraticPolynomial
             interpolation <- interpolate.patch.threePoint(data, solver)
         } else {
-            if (missing(max)) {
+            if (is.na(max)) {
                 shift <- min
             } else {
                 shift <- max
@@ -239,20 +239,17 @@ quadratic.point.slope.extrema <- function(data, x = point.x(data), y = point.y(d
 #' @seealso [rrinterpolate()] for interpolation details.
 #' 
 #' @export
-rrinterpolate.slope <- function(x, y, k, min, max) {
+rrinterpolate.slope <- function(x, y, k, min = NA, max = NA) {
     if (length(x) != length(y)) stop("Incompatible lengths of x and y")
-    if (any(y < ifelse(missing(min), -Inf, min) | y > ifelse(missing(max), Inf, max))) stop("Some y values are not in the range specified")
+    if (any(y < ifelse(is.na(min), -Inf, min) | y > ifelse(is.na(max), Inf, max))) stop("Some y values are not in the range specified")
     shift <- 0
     scale <- 1
 
-    od <- order(x)
-    data <- pointData(x[od], (y[od] - shift)*scale)
-
-    if (missing(min) | missing(max)) {
-        if (missing(min) & missing(max)) {
+    if (is.na(min) | is.na(max)) {
+        if (is.na(min) & is.na(max)) {
             solver <- linearPolynomial
         } else {
-            if (missing(max)) {
+            if (is.na(max)) {
                 shift <- min
             } else {
                 shift <- max
@@ -267,6 +264,9 @@ rrinterpolate.slope <- function(x, y, k, min, max) {
             restrictedRange(data, slope, tau)
         }
     }
+
+    od <- order(x)
+    data <- pointData(x[od], (y[od] - shift)*scale)
 
     interpolation <- interpolate.patch.onePointSlope(data, k, solver)
     interpolation <- interpolation / scale + shift
