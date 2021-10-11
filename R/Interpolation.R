@@ -41,7 +41,7 @@ quadraticPolynomial <- function(data, x = point.x(data), y = point.y(data)) {
 #' @param x The vector of x-coordinates. May be assigned directly.
 #' @param y The vector of y-coordinates. May be assigned directly.
 #' @return The quadratic polynomial that goes through \code{(x[1],y[1])}, \code{(x[2],y[2])}, and \code{(x[3],y[3])}.
-restrictedRange <- function(data, slope, tau, patch = getOption("defaultPatching", default = patch.fifthDegree), tol = sqrt(.Machine$double.eps)) {
+interpolate.oneJet <- function(data, slope, tau, patch = getOption("defaultPatching", default = patch.fifthDegree), tol = sqrt(.Machine$double.eps)) {
     x0 <- point.x(data)
     k <- slope
     b <- point.y(data)
@@ -202,7 +202,7 @@ rrinterpolate <- function(x, y, min = NA, max = NA) {
             }
 
             slopes <- findSlope.beta.threePoints.restricted(data, tau = tau.)
-            result <- interpolate.patch.onePointSlope(data, slopes, function(data, slope, tau.. = tau.) restrictedRange(data, slope, tau..))
+            result <- interpolate.patch.onePointSlope(data, slopes, function(data, slope, tau.. = tau.) interpolate.oneJet(data, slope, tau..))
             
             return(result)
         }
@@ -261,7 +261,7 @@ rrinterpolate.slope <- function(x, y, k, min = NA, max = NA) {
         tau <- (max - min) / 2
         shift <- (max + min) / 2
         solver <- function(data, slope) {
-            restrictedRange(data, slope, tau)
+            interpolate.oneJet(data, slope, tau)
         }
     }
 
