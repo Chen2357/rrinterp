@@ -84,10 +84,10 @@ rrplot <- function(interpolation, interval, x.point, y.point, limits, res = 1000
 }
 
 #' @export
-rrinterpolate.plot <- function(x, y, min, max, res = 1000, usedual) {
+rrinterpolate.plot <- function(x, y, min, max, res = 1000, autodiff) {
     if (!requireNamespace("reshape2", quietly = TRUE)) stop("Package \"reshape2\" needed for this function to work. Please install it.", call. = FALSE)
     if (!requireNamespace("ggplot2", quietly = TRUE)) stop("Package \"ggplot2\" needed for this function to work. Please install it.", call. = FALSE)
     interpolation <- rrinterpolate(x, y, min, max)
     interval <- seq(min(x), max(x), (max(x) - min(x)) / res)
-    rrplot(interpolation, interval, pointData(x, y), usedual)
+    rrplot(interpolation, interval, pointData(x, y), autodiff)
 }
