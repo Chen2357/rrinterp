@@ -73,6 +73,7 @@ setMethod("initialize", "patching",
     }
 )
 
+#' @export
 setMethod("predict", signature(object="patching"),
     function(object, newdata) {
         n <- length(object@breaks)

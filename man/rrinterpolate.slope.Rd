@@ -4,7 +4,7 @@
 \alias{rrinterpolate.slope}
 \title{Interpolation with Boundaries Given Prescribed Slopes}
 \usage{
-rrinterpolate.slope(x, y, k, min, max)
+rrinterpolate.slope(x, y, k, min = NA, max = NA)
 }
 \arguments{
 \item{x}{A vector of x-values of the points to be interpolated over.}

@@ -18,5 +18,3 @@ setGeneric("%+%", function(e1, e2) standardGeneric("%+%"))
 
 # ANCHOR Differentiation
 setGeneric("differentiate", function(x) standardGeneric("differentiate"))
-
-setGeneric("predict", function(object,newdata) standardGeneric("predict"))

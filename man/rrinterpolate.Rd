@@ -4,7 +4,7 @@
 \alias{rrinterpolate}
 \title{Interpolation with Boundaries}
 \usage{
-rrinterpolate(x, y, min, max)
+rrinterpolate(x, y, min = NA, max = NA)
 }
 \arguments{
 \item{x}{A vector of x-values of the points to be interpolated over.}
