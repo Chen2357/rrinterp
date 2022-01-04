@@ -23,7 +23,6 @@ lines(xinterval, y2, type = "l", col = "red")
 lines(xinterval, y3, type = "l", col = "green")
 xlegend <- c(xrange[1], xrange[1]+(xrange[2]-xrange[1])/2.1)
 ylegend <- c(yrange[2], yrange[2]-(yrange[2]-yrange[1])/4.5)
-legend(xlegend, ylegend, legend = c("Bounded by [0,10]", "Bounded by [0,20]", "Bounded by [-20,20]"), y.intersp = 2, col = c("blue", "red", "lines(xinterval, y3, type = "l", col = "green")
-"), lty=rep(1, 3), cex = 1.2)
+legend(xlegend, ylegend, legend = c("Bounded by [0,10]", "Bounded by [0,20]", "Bounded by [-20,20]"), y.intersp = 2, col = c("blue", "red", "green"), lty=rep(1, 3), cex = 1.2)
 
 print(x)
